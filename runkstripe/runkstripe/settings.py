@@ -13,8 +13,6 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 import os
 from pathlib import Path
 
-from decouple import config
-
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -24,7 +22,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
 # SECRET_KEY = 'django-insecure-bf%ld1*v4s9r63^d24+ed4dp(6vcb$u7fjh_lu)t9hax-u2hap'
-SECRET_KEY = config('SECRET_KEY')
+SECRET_KEY = 'django-insecure-bf%ld1*v4s9r63^d24+ed4dp(6vcb$u7fjh_lu)t9hax-u2hap'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
@@ -131,6 +129,6 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-STRIPE_PUBLIC_KEY = config('STRIPE_PUBLIC_KEY')
-STRIPE_SECRET_KEY = config('STRIPE_SECRET_KEY')
+STRIPE_PUBLIC_KEY = 'pk_test_51L074OAsqiGJXrJSLFS2jABxYC4Qa0RYNq0SN6yNHEKNHk48tooxN8cCVGIfGEJ1DWUZdm8HSvKW7eO7NgVqxy4k00b12J4sSa'
+STRIPE_SECRET_KEY = 'sk_test_51L074OAsqiGJXrJSXAZDxLchAie4OFbp0WIkrrPF2VyoE2vYrwKXSKHSmDxTPOVgTYeLdPmUDhYtSBL1w3920Ltc00qhahlast'
 STRIPE_WEBHOOK_SECRET = ''
