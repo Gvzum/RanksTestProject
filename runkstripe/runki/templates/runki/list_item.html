@@ -1,0 +1,66 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ title }}</title>
+    <script src="https://js.stripe.com/v3/"></script>
+</head>
+<body>
+    <ul>
+        {% for item in items %}
+        <li>
+            <a href="{% url  'runki:ItemDetail' item.pk %}">{{ item.name }}</a>
+            <button class="card_btn" onclick="add_to_card(this)" data-item="{{ item.pk }}">Card</button>
+        </li>
+        {% endfor %}
+    </ul>
+
+    <p><strong>Cart items: </strong>{{ cart_size }}</p>
+
+    <button class="cart_checkout" onclick="checkout_cart()">Checkout Cart</button>
+
+    {% csrf_token %}
+
+    <script type="text/javascript">
+         const csrf_token = document.querySelector('[name=csrfmiddlewaretoken]').value
+         let stripe = Stripe('{{ STRIPE_PUBLIC_KEY }}');
+
+         function add_to_card(elem) {
+           fetch('/add_to_cart/', {
+                method: 'POST',
+                headers: {
+                  'X-CSRFToken': csrf_token,
+                },
+                body: JSON.stringify({'item_pk': elem.dataset.item }),
+             }
+           )
+           .then(res => res.json())
+           .then(data => {
+             console.log(data)
+             window.location.reload()
+           })
+           .catch(err => {
+             console.log(err.message)
+           })
+         }
+
+
+         function checkout_cart() {
+            fetch('/checkout_cart/', {
+              method: 'GET'
+            })
+                .then(res => res.json())
+                .then(session => {
+                  return stripe.redirectToCheckout({ sessionId: session.id })
+                })
+                .then(result => {
+                  if (result.error) {
+                    alert(result.error.message)
+                  }
+                })
+                .catch(err => {
+                  console.error(err)
+                })
+         }
+    </script>
+</body>
+</html>
