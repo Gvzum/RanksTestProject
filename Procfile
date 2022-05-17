@@ -1,0 +1,1 @@
+web: gunicorn --pythonpath runkstripe runkstripe.wsgi --log-file -
